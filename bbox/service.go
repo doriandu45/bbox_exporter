@@ -56,7 +56,7 @@ type ServicesInformations struct {
 		} `json:"upnp"`
 		Remote struct {
 			Proxywol struct {
-				Status int    `json:"status"`
+				Status int    `json:"status,string"`
 				Enable int    `json:"enable"`
 				IP     string `json:"ip"`
 			} `json:"proxywol"`

@@ -41,6 +41,11 @@ var (
 		"Number of boots since last reset to factory default",
 		nil, nil,
 	)
+	deviceUptime = prometheus.NewDesc(
+                prometheus.BuildFQName(namespace, "", "device_uptime"),
+                "Uptime in seconds",
+                nil, nil,
+        )
 	deviceTemperature = prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, "", "device_temperature"),
 		"Current internal temperature in °C",
@@ -71,6 +76,7 @@ func describeDeviceMetrics(ch chan<- *prometheus.Desc) {
 	ch <- deviceUsing
 	ch <- deviceStatus
 	ch <- deviceNumberOfBoots
+	ch <- deviceUptime
 	ch <- deviceTemperature
 	ch <- deviceMemory
 	ch <- deviceCPU
@@ -86,18 +92,19 @@ func storeDeviceMetrics(ch chan<- prometheus.Metric, metrics bbox.DeviceMetrics)
 	storeMetric(ch, float64(metrics.Informations[0].Device.Using.VDSL), deviceUsing, "vdsl")
 	storeMetric(ch, metrics.Informations[0].Device.Status, deviceStatus)
 	storeMetric(ch, metrics.Informations[0].Device.NumberOfBoots, deviceNumberOfBoots)
+	storeMetric(ch, float64(metrics.Informations[0].Device.Uptime), deviceUptime)
 	storeMetric(ch, metrics.Informations[0].Device.Temperature.Current, deviceTemperature)
 	storeMetric(ch, metrics.Memory[0].Device.Memory.Total, deviceMemory, "total")
 	storeMetric(ch, metrics.Memory[0].Device.Memory.Free, deviceMemory, "free")
 	storeMetric(ch, metrics.Memory[0].Device.Memory.Cached, deviceMemory, "cached")
-	storeMetric(ch, metrics.CPU[0].Device.CPU.Time.Total, deviceCPU, "total")
-	storeMetric(ch, metrics.CPU[0].Device.CPU.Time.User, deviceCPU, "user")
-	storeMetric(ch, metrics.CPU[0].Device.CPU.Time.Nice, deviceCPU, "nice")
-	storeMetric(ch, metrics.CPU[0].Device.CPU.Time.System, deviceCPU, "system")
-	storeMetric(ch, metrics.CPU[0].Device.CPU.Time.IO, deviceCPU, "io")
-	storeMetric(ch, metrics.CPU[0].Device.CPU.Time.Idle, deviceCPU, "idle")
-	storeMetric(ch, metrics.CPU[0].Device.CPU.Time.Irq, deviceCPU, "irq")
-	storeMetric(ch, metrics.CPU[0].Device.CPU.Process.Created, deviceProcess, "created")
-	storeMetric(ch, metrics.CPU[0].Device.CPU.Process.Running, deviceProcess, "running")
-	storeMetric(ch, metrics.CPU[0].Device.CPU.Process.Blocked, deviceProcess, "blocked")
+	storeMetric(ch, float64(metrics.CPU[0].Device.CPU.Time.Total), deviceCPU, "total")
+	storeMetric(ch, float64(metrics.CPU[0].Device.CPU.Time.User), deviceCPU, "user")
+	storeMetric(ch, float64(metrics.CPU[0].Device.CPU.Time.Nice), deviceCPU, "nice")
+	storeMetric(ch, float64(metrics.CPU[0].Device.CPU.Time.System), deviceCPU, "system")
+	storeMetric(ch, float64(metrics.CPU[0].Device.CPU.Time.IO), deviceCPU, "io")
+	storeMetric(ch, float64(metrics.CPU[0].Device.CPU.Time.Idle), deviceCPU, "idle")
+	storeMetric(ch, float64(metrics.CPU[0].Device.CPU.Time.Irq), deviceCPU, "irq")
+	storeMetric(ch, float64(metrics.CPU[0].Device.CPU.Process.Created), deviceProcess, "created")
+	storeMetric(ch, float64(metrics.CPU[0].Device.CPU.Process.Running), deviceProcess, "running")
+	storeMetric(ch, float64(metrics.CPU[0].Device.CPU.Process.Blocked), deviceProcess, "blocked")
 }

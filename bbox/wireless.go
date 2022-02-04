@@ -51,11 +51,11 @@ type WirelessStatistics struct {
 func (client *Client) getWirelessMetrics() (*WirelessMetrics, error) {
 	var metrics WirelessMetrics
 
-	// wifi5Ghz, err := client.getWirelessStatistics("5")
-	// if err != nil {
-	// 	return nil, err
-	// }
-	// metrics.Wireless5GhzStatistics = wifi5Ghz
+	wifi5Ghz, err := client.getWirelessStatistics("5")
+	if err != nil {
+		return nil, err
+	}
+	metrics.Wireless5GhzStatistics = wifi5Ghz
 
 	wifi24Ghz, err := client.getWirelessStatistics("24")
 	if err != nil {

@@ -22,7 +22,7 @@ type DNSMetrics struct {
 
 type DNSAverage struct {
 	DNS struct {
-		NumberOfQueries float64 `json:""`
+		NumberOfQueries float64 `json:"nbqueries"`
 		Min             float64 `json:"min"`
 		Max             float64 `json:"max"`
 		Average         float64 `json:"avg"`

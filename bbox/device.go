@@ -26,7 +26,8 @@ type DeviceInformations struct {
 	Device struct {
 		Now           string  `json:"now"`
 		Status        float64 `json:"status"`
-		NumberOfBoots float64 `json:"number_of_boots"`
+		NumberOfBoots float64 `json:"numberofboots"`
+		Uptime        int     `json:"uptime"`
 		ModelName     string  `json:"modelname"`
 		Temperature   struct {
 			Current float64 `json:"current"`
@@ -56,18 +57,18 @@ type DeviceCPU struct {
 	Device struct {
 		CPU struct {
 			Time struct {
-				Total  float64 `json:"total"`
-				User   float64 `json:"user"`
-				Nice   float64 `json:"nice"`
-				System float64 `json:"system"`
-				IO     float64 `json:"io"`
-				Idle   float64 `json:"idle"`
-				Irq    float64 `json:"irq"`
+				Total  int `json:"total"`
+				User   int `json:"user"`
+				Nice   int `json:"nice"`
+				System int `json:"system"`
+				IO     int `json:"io"`
+				Idle   int `json:"idle"`
+				Irq    int `json:"irq"`
 			} `json:"time"`
 			Process struct {
-				Created float64 `json:"created"`
-				Running float64 `json:"running"`
-				Blocked float64 `json:"blocked"`
+				Created int `json:"created"`
+				Running int `json:"running"`
+				Blocked int `json:"blocked"`
 			} `json:"process"`
 		} `json:"cpu"`
 	} `json:"device"`

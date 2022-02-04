@@ -77,14 +77,14 @@ func describeWirelessMetrics(ch chan<- *prometheus.Desc) {
 }
 
 func storeWirelessMetrics(ch chan<- prometheus.Metric, metrics bbox.WirelessMetrics) {
-	// storeMetric(ch, float64(metrics.Wireless5GhzStatistics[0].Wireless.SSID.Stats.Tx.Bytes), txBytesWireless, "5ghz")
-	// storeMetric(ch, float64(metrics.Wireless5GhzStatistics[0].Wireless.SSID.Stats.Tx.Packets), txPacketsWireless, "5ghz")
-	// storeMetric(ch, float64(metrics.Wireless5GhzStatistics[0].Wireless.SSID.Stats.Tx.Packetserrors), txPacketsErrorsWireless, "5ghz")
-	// storeMetric(ch, float64(metrics.Wireless5GhzStatistics[0].Wireless.SSID.Stats.Tx.Packetsdiscards), txPacketsDiscardsWireless, "5ghz")
-	// storeMetric(ch, float64(metrics.Wireless5GhzStatistics[0].Wireless.SSID.Stats.Rx.Bytes), rxBytesWireless, "5ghz")
-	// storeMetric(ch, float64(metrics.Wireless5GhzStatistics[0].Wireless.SSID.Stats.Rx.Packets), rxPacketsWireless, "5ghz")
-	// storeMetric(ch, float64(metrics.Wireless5GhzStatistics[0].Wireless.SSID.Stats.Rx.Packetserrors), rxPacketsErrorsWireless, "5ghz")
-	// storeMetric(ch, float64(metrics.Wireless5GhzStatistics[0].Wireless.SSID.Stats.Rx.Packetsdiscards), rxPacketsDiscardsWireless, "5ghz")
+	storeMetric(ch, float64(metrics.Wireless5GhzStatistics[0].Wireless.SSID.Stats.Tx.Bytes), txBytesWireless, "5ghz")
+	storeMetric(ch, float64(metrics.Wireless5GhzStatistics[0].Wireless.SSID.Stats.Tx.Packets), txPacketsWireless, "5ghz")
+	storeMetric(ch, float64(metrics.Wireless5GhzStatistics[0].Wireless.SSID.Stats.Tx.Packetserrors), txPacketsErrorsWireless, "5ghz")
+	storeMetric(ch, float64(metrics.Wireless5GhzStatistics[0].Wireless.SSID.Stats.Tx.Packetsdiscards), txPacketsDiscardsWireless, "5ghz")
+	storeMetric(ch, float64(metrics.Wireless5GhzStatistics[0].Wireless.SSID.Stats.Rx.Bytes), rxBytesWireless, "5ghz")
+	storeMetric(ch, float64(metrics.Wireless5GhzStatistics[0].Wireless.SSID.Stats.Rx.Packets), rxPacketsWireless, "5ghz")
+	storeMetric(ch, float64(metrics.Wireless5GhzStatistics[0].Wireless.SSID.Stats.Rx.Packetserrors), rxPacketsErrorsWireless, "5ghz")
+	storeMetric(ch, float64(metrics.Wireless5GhzStatistics[0].Wireless.SSID.Stats.Rx.Packetsdiscards), rxPacketsDiscardsWireless, "5ghz")
 	storeMetric(ch, float64(metrics.Wireless24GhzStatistics[0].Wireless.SSID.Stats.Tx.Bytes), txBytesWireless, "24ghz")
 	storeMetric(ch, float64(metrics.Wireless24GhzStatistics[0].Wireless.SSID.Stats.Tx.Packets), txPacketsWireless, "24ghz")
 	storeMetric(ch, float64(metrics.Wireless24GhzStatistics[0].Wireless.SSID.Stats.Tx.Packetserrors), txPacketsErrorsWireless, "24ghz")
