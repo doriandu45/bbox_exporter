@@ -141,6 +141,30 @@ func (client *Client) GetMetrics() (*Metrics, error) {
 }
 
 func (client *Client) Authenticate() error {
+	level.Info(client.logger).Log("msg", "Number of cookies", "code", len(client.cookies))
+	if len(client.cookies) != 0 {
+		url := fmt.Sprintf("%s/login", client.url)
+		httpClient := &http.Client{Timeout: time.Second * 10}
+		extend_request,err := http.NewRequest("PUT", url, nil)
+		if err != nil {
+			return err
+		}
+		for _, cookie := range client.cookies {
+			extend_request.AddCookie(cookie)
+		}
+		resp, err := httpClient.Do(extend_request)
+		level.Info(client.logger).Log("msg", "API login extend", "code", resp.StatusCode)
+		if err!= nil {
+			level.Error(client.logger).Log("msg", "API login extend", "api", err)
+		} else {
+			cookies := resp.Cookies()
+        		if len(resp.Cookies()) == 0 {
+                		return fmt.Errorf("can't retreive Cookie from API response")
+        		}
+        		client.cookies = cookies
+			return nil
+		}
+	}
 	request := fmt.Sprintf("%s/login", client.url)
 	level.Info(client.logger).Log("msg", "API request", "api", request)
 	resp, err := http.Post(
