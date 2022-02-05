@@ -175,12 +175,12 @@ var (
 		nil, nil,
 	)
 	xDslATUR = prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, "", "xdsl_atu-r"),
+		prometheus.BuildFQName(namespace, "", "xdsl_atur"),
 		"Provider of the ATU-R chipset",
 		[]string{"provider"}, nil,
 	)
 	xDslATUC = prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, "", "xdsl_atu-c"),
+		prometheus.BuildFQName(namespace, "", "xdsl_atuc"),
 		"Provider of the ATU-C chupset",
 		[]string{"provider"}, nil,
 	)

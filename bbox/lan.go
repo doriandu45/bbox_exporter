@@ -42,10 +42,10 @@ type LanHost struct {
 	Lastseen   interface{}   `json:"lastseen"`
 	IP6Address []interface{} `json:"ip6address"`
 	Ethernet   struct {
-		Physicalport int    `json:"physicalport"`
-		Logicalport  int    `json:"logicalport"`
+		Physicalport int         `json:"physicalport"`
+		Logicalport  int         `json:"logicalport"`
 		Speed        interface{} `json:"speed"`
-		Mode         string `json:"mode"`
+		Mode         string      `json:"mode"`
 	} `json:"ethernet"`
 	Stb struct {
 		Product string `json:"product"`
