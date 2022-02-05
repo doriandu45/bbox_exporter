@@ -23,6 +23,8 @@ type WanMetrics struct {
 	IPStatistics          []WanIPStatistics    `json:"ip_statistics"`
 	FtthStatistics        *FtthStatistics      `json:"ftth_statistics"`
 	DiagnosticsStatistics []WanDiagsStatistics `json:"diagnostics"`
+	XDslStatistics        []WanXDslStat        `json:"xdsl_statistics"`
+	XDslInformations      []WanXDslInfo        `json:"xdsl_informations"`
 }
 
 type WanIPStatistics struct {
@@ -62,6 +64,54 @@ type Ftth struct {
 			Mode  string `json:"mode"`
 			State string `json:"state"`
 		} `json:"ftth"`
+	} `json:"wan"`
+}
+
+type WanXDslStat struct {
+	Wan struct {
+		XDsl struct {
+			Stats struct {
+				LocalFEC  int `json:"local_fec"`
+				RemoteFEC int `json:"remote_fec"`
+				LocalCRC  int `json:"local_crc"`
+				RemoteCRC int `json:"remote_crc"`
+				LocalHEC  int `json:"local_hec"`
+				RemoteHEC int `json:"remote_hec"`
+			} `json:"stats"`
+		} `json:"xdsl"`
+	} `json:"wan"`
+}
+
+type WanXDslInfo struct {
+	Wan struct {
+		XDsl struct {
+			State        string `json:"state"`
+			Modulation   string `json:"modulation"`
+			Showtime     int    `json:"showtime"`
+			ATURProvider string `json:"atur_provider"`
+			ATUCProcider string `json:"atuc_provider"`
+			SyncCount    int    `json:"sync_count"`
+			Up           struct {
+				Biterates   int `json:"bitrates"`
+				Noise       int `json:"noise"`
+				Attenuation int `json:"attenuation"`
+				Power       int `json:"power"`
+				PhyR        int `json:"phyr"`
+				GINP        int `json:"ginp"`
+				// Nitro       int `json:"nitro"` // Not enabled because in my case, it's an empty string (but it's the int 0 in the down struct, go figure why)
+				InterleaveDelay int `json:"interleave_delay"`
+			} `json:"up"`
+			Down struct {
+				Biterates       int `json:"bitrates"`
+				Noise           int `json:"noise"`
+				Attenuation     int `json:"attenuation"`
+				Power           int `json:"power"`
+				PhyR            int `json:"phyr"`
+				GINP            int `json:"ginp"`
+				Nitro           int `json:"nitro"`
+				InterleaveDelay int `json:"interleave_delay"`
+			} `json:"down"`
+		} `json:"xdsl"`
 	} `json:"wan"`
 }
 
@@ -156,6 +206,18 @@ func (client *Client) getWanMetrics() (*WanMetrics, error) {
 	}
 	metrics.DiagnosticsStatistics = diagsStats
 
+	xDslStats, err := client.getXDslStatistics()
+	if err != nil {
+		return nil, err
+	}
+	metrics.XDslStatistics = xDslStats
+
+	xDslInfos, err := client.getXDslInformations()
+	if err != nil {
+		return nil, err
+	}
+	metrics.XDslInformations = xDslInfos
+
 	return &metrics, nil
 }
 
@@ -198,6 +260,28 @@ func (client *Client) getWANDiagnostics() ([]WanDiagsStatistics, error) {
 	level.Info(client.logger).Log("msg", "Retrieve WAN diagnostics from Bbox")
 	var metrics []WanDiagsStatistics
 	if err := client.apiRequest("/wan/diags", &metrics); err != nil {
+		return nil, err
+	}
+	return metrics, nil
+}
+
+// getXDslInformations returns information about xDsl
+// https://api.bbox.fr/doc/apirouter/index.html#api-WAN-GetWANXDSL
+func (client *Client) getXDslInformations() ([]WanXDslInfo, error) {
+	level.Info(client.logger).Log("msg", "Retrieve xDsl informations from Bbox")
+	var metrics []WanXDslInfo
+	if err := client.apiRequest("/wan/xdsl", &metrics); err != nil {
+		return nil, err
+	}
+	return metrics, nil
+}
+
+// getXDslStatistics returns statistics about xDsl
+// https://api.bbox.fr/doc/apirouter/index.html#api-WAN-GetWANXDSLStats
+func (client *Client) getXDslStatistics() ([]WanXDslStat, error) {
+	level.Info(client.logger).Log("msg", "Retrieve xDsl statistics from Bbox")
+	var metrics []WanXDslStat
+	if err := client.apiRequest("/wan/xdsl/stats", &metrics); err != nil {
 		return nil, err
 	}
 	return metrics, nil

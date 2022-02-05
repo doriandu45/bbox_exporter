@@ -129,6 +129,126 @@ var (
 		"Number of tries",
 		[]string{"mode"}, nil,
 	)
+	xDslLocalFEC = prometheus.NewDesc(
+		prometheus.BuildFQName(namespace, "", "xdsl_down_fec"),
+		"Number of FEC errors for downstream",
+		nil, nil,
+	)
+	xDslRemoteFEC = prometheus.NewDesc(
+		prometheus.BuildFQName(namespace, "", "xdsl_up_fec"),
+		"Number of FEC errors for upstream",
+		nil, nil,
+	)
+	xDslLocalCRC = prometheus.NewDesc(
+		prometheus.BuildFQName(namespace, "", "xdsl_down_crc"),
+		"Number of CRC errors for downstream",
+		nil, nil,
+	)
+	xDslRemoteCRC = prometheus.NewDesc(
+		prometheus.BuildFQName(namespace, "", "xdsl_up_crc"),
+		"Number of CRC errors for upstream",
+		nil, nil,
+	)
+	xDslLocalHEC = prometheus.NewDesc(
+		prometheus.BuildFQName(namespace, "", "xdsl_down_hec"),
+		"Number of HEC errors for downstream",
+		nil, nil,
+	)
+	xDslRemoteHEC = prometheus.NewDesc(
+		prometheus.BuildFQName(namespace, "", "xdsl_up_hec"),
+		"Number of HEC errors for upstream",
+		nil, nil,
+	)
+	xDslStatus = prometheus.NewDesc(
+		prometheus.BuildFQName(namespace, "", "xdsl_status"),
+		"Status of the xDsl connexion",
+		nil, nil,
+	)
+	xDslModulation = prometheus.NewDesc(
+		prometheus.BuildFQName(namespace, "", "xdsl_modulation"),
+		"Modulation of the xDsl link",
+		[]string{"modulation"}, nil,
+	)
+	xDslShowtime = prometheus.NewDesc(
+		prometheus.BuildFQName(namespace, "", "xdsl_showtime"),
+		"Active time of the xDsl link in seconds",
+		nil, nil,
+	)
+	xDslATUR = prometheus.NewDesc(
+		prometheus.BuildFQName(namespace, "", "xdsl_atu-r"),
+		"Provider of the ATU-R chipset",
+		[]string{"provider"}, nil,
+	)
+	xDslATUC = prometheus.NewDesc(
+		prometheus.BuildFQName(namespace, "", "xdsl_atu-c"),
+		"Provider of the ATU-C chupset",
+		[]string{"provider"}, nil,
+	)
+	xDslSyncCount = prometheus.NewDesc(
+		prometheus.BuildFQName(namespace, "", "xdsl_sync_count"),
+		"Number of xDsl synchronisations  since last reboot",
+		nil, nil,
+	)
+	xDslUpBitrate = prometheus.NewDesc(
+		prometheus.BuildFQName(namespace, "", "xdsl_up_bitrate"),
+		"Speed of the xDsl upstream in kB/s",
+		nil, nil,
+	)
+	xDslUpNoise = prometheus.NewDesc(
+		prometheus.BuildFQName(namespace, "", "xdsl_up_noise"),
+		"Uplink noise in cB (0.1 dB)",
+		nil, nil,
+	)
+	xDslUpAttenuation = prometheus.NewDesc(
+		prometheus.BuildFQName(namespace, "", "xdsl_up_attenuation"),
+		"Uplink attenuation in cB (0.1 dB)",
+		nil, nil,
+	)
+	xDslUpPower = prometheus.NewDesc(
+		prometheus.BuildFQName(namespace, "", "xdsl_up_power"),
+		"Uplink power in whatever unit it is. No, the BBox API doc don't tell anything about that",
+		nil, nil,
+	)
+	xDslUpBoost = prometheus.NewDesc(
+		prometheus.BuildFQName(namespace, "", "xdsl_up_boost"),
+		"Indicates which speed boosting technology is used for the upstream",
+		[]string{"used"}, nil,
+	)
+	xDslUpInterleave = prometheus.NewDesc(
+		prometheus.BuildFQName(namespace, "", "xdsl_up_interleave"),
+		"Uplink interleave delay (unit unknown)",
+		nil, nil,
+	)
+	xDslDownBitrate = prometheus.NewDesc(
+		prometheus.BuildFQName(namespace, "", "xdsl_down_bitrate"),
+		"Speed of the xDsl downstream in kB/s",
+		nil, nil,
+	)
+	xDslDownNoise = prometheus.NewDesc(
+		prometheus.BuildFQName(namespace, "", "xdsl_down_noise"),
+		"Downlink noise in cB (0.1 dB)",
+		nil, nil,
+	)
+	xDslDownAttenuation = prometheus.NewDesc(
+		prometheus.BuildFQName(namespace, "", "xdsl_down_attenuation"),
+		"Downlink attenuation in cB (0.1 dB)",
+		nil, nil,
+	)
+	xDslDownPower = prometheus.NewDesc(
+		prometheus.BuildFQName(namespace, "", "xdsl_down_power"),
+		"Downlink power in whatever unit it is. No, the BBox API doc don't tell anything about that",
+		nil, nil,
+	)
+	xDslDownBoost = prometheus.NewDesc(
+		prometheus.BuildFQName(namespace, "", "xdsl_down_boost"),
+		"Indicates which speed boosting technology is used for the downstream",
+		[]string{"used"}, nil,
+	)
+	xDslDownInterleave = prometheus.NewDesc(
+		prometheus.BuildFQName(namespace, "", "xdsl_down_interleave"),
+		"Downlink interleave delay (unit unknown)",
+		nil, nil,
+	)
 )
 
 func describeWanMetrics(ch chan<- *prometheus.Desc) {
@@ -153,6 +273,35 @@ func describeWanMetrics(ch chan<- *prometheus.Desc) {
 	ch <- diagnosticsNumberOfSuccess
 	ch <- diagnosticsNumberOfError
 	ch <- diagnosticsNumberOfTries
+	ch <- xDslLocalFEC
+	ch <- xDslRemoteFEC
+	ch <- xDslLocalCRC
+	ch <- xDslRemoteCRC
+	ch <- xDslLocalHEC
+	ch <- xDslRemoteHEC
+	ch <- xDslStatus
+	ch <- xDslModulation
+	ch <- xDslShowtime
+	ch <- xDslATUR
+	ch <- xDslATUC
+	ch <- xDslSyncCount
+	ch <- xDslUpBitrate
+	ch <- xDslUpNoise
+	ch <- xDslUpAttenuation
+	ch <- xDslUpNoise
+	ch <- xDslUpPower
+	ch <- xDslUpNoise
+	ch <- xDslUpBoost
+	ch <- xDslUpInterleave
+	ch <- xDslDownBitrate
+	ch <- xDslDownNoise
+	ch <- xDslDownAttenuation
+	ch <- xDslDownNoise
+	ch <- xDslDownPower
+	ch <- xDslDownNoise
+	ch <- xDslDownBoost
+	ch <- xDslDownInterleave
+
 }
 
 func storeWanMetrics(ch chan<- prometheus.Metric, metrics bbox.WanMetrics) {
@@ -195,6 +344,47 @@ func storeWanMetrics(ch chan<- prometheus.Metric, metrics bbox.WanMetrics) {
 			break
 		}
 	}
+	storeMetric(ch, float64(metrics.XDslStatistics[0].Wan.XDsl.Stats.LocalFEC), xDslLocalFEC)
+	storeMetric(ch, float64(metrics.XDslStatistics[0].Wan.XDsl.Stats.RemoteFEC), xDslRemoteFEC)
+	storeMetric(ch, float64(metrics.XDslStatistics[0].Wan.XDsl.Stats.LocalCRC), xDslLocalCRC)
+	storeMetric(ch, float64(metrics.XDslStatistics[0].Wan.XDsl.Stats.RemoteCRC), xDslRemoteCRC)
+	storeMetric(ch, float64(metrics.XDslStatistics[0].Wan.XDsl.Stats.LocalHEC), xDslLocalHEC)
+	storeMetric(ch, float64(metrics.XDslStatistics[0].Wan.XDsl.Stats.RemoteHEC), xDslRemoteHEC)
+
+	if metrics.XDslInformations[0].Wan.XDsl.State == "Connected" {
+		storeMetric(ch, 1.0, xDslStatus)
+	} else {
+		storeMetric(ch, 0.0, xDslStatus)
+	}
+
+	storeMetric(ch, 1.0, xDslModulation, metrics.XDslInformations[0].Wan.XDsl.Modulation)
+	storeMetric(ch, float64(metrics.XDslInformations[0].Wan.XDsl.Showtime), xDslShowtime)
+	storeMetric(ch, 1.0, xDslATUR, metrics.XDslInformations[0].Wan.XDsl.ATURProvider)
+	storeMetric(ch, 1.0, xDslATUC, metrics.XDslInformations[0].Wan.XDsl.ATUCProcider)
+	storeMetric(ch, float64(metrics.XDslInformations[0].Wan.XDsl.SyncCount), xDslSyncCount)
+
+	storeMetric(ch, float64(metrics.XDslInformations[0].Wan.XDsl.Up.Biterates), xDslUpBitrate)
+	storeMetric(ch, float64(metrics.XDslInformations[0].Wan.XDsl.Up.Noise), xDslUpNoise)
+	storeMetric(ch, float64(metrics.XDslInformations[0].Wan.XDsl.Up.Attenuation), xDslUpAttenuation)
+	storeMetric(ch, float64(metrics.XDslInformations[0].Wan.XDsl.Up.Power), xDslUpPower)
+
+	storeMetric(ch, float64(metrics.XDslInformations[0].Wan.XDsl.Up.PhyR), xDslUpBoost, "phyr")
+	storeMetric(ch, float64(metrics.XDslInformations[0].Wan.XDsl.Up.GINP), xDslUpBoost, "ginp")
+	storeMetric(ch, 0.0, xDslUpBoost, "nitro") // See bbox/wan.go
+
+	storeMetric(ch, float64(metrics.XDslInformations[0].Wan.XDsl.Up.InterleaveDelay), xDslUpInterleave)
+
+	storeMetric(ch, float64(metrics.XDslInformations[0].Wan.XDsl.Down.Biterates), xDslDownBitrate)
+	storeMetric(ch, float64(metrics.XDslInformations[0].Wan.XDsl.Down.Noise), xDslDownNoise)
+	storeMetric(ch, float64(metrics.XDslInformations[0].Wan.XDsl.Down.Attenuation), xDslDownAttenuation)
+	storeMetric(ch, float64(metrics.XDslInformations[0].Wan.XDsl.Down.Power), xDslDownPower)
+
+	storeMetric(ch, float64(metrics.XDslInformations[0].Wan.XDsl.Down.PhyR), xDslDownBoost, "phyr")
+	storeMetric(ch, float64(metrics.XDslInformations[0].Wan.XDsl.Down.GINP), xDslDownBoost, "ginp")
+	storeMetric(ch, float64(metrics.XDslInformations[0].Wan.XDsl.Down.Nitro), xDslDownBoost, "nitro")
+
+	storeMetric(ch, float64(metrics.XDslInformations[0].Wan.XDsl.Down.InterleaveDelay), xDslDownInterleave)
+
 }
 
 func storeWanFtthMetric(ch chan<- prometheus.Metric, metric string) {
